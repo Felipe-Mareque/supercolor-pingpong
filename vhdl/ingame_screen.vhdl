@@ -154,19 +154,20 @@ begin
     process(border_pixel, p1_paddle_pixel, p2_paddle_pixel, ball_pixel, 
             p1_score_pixel, p2_score_pixel)
     begin
-        if (p1_paddle_pixel = '1' or p2_paddle_pixel = '1') then
-            col <= "100";	-- red
+        if (p1_paddle_pixel = '1') then
+            col <= "001";    -- Azul para o Jogador 1
+        elsif (p2_paddle_ypos_next /= 0 and p2_paddle_pixel = '1') then -- Apenas p2_paddle_pixel
+            col <= "100";    -- Vermelho para o Jogador 2
         elsif (ball_pixel = '1') then
-            col <= "111";	-- bright white
+            col <= "111";    -- Branco brilhante
         elsif (border_pixel = '1') then
-            col <= "011";	-- light grey
+            col <= "011";    -- Cinza claro
         elsif (p1_score_pixel = '1' or p2_score_pixel ='1') then
-            col <= "011";	-- light grey
+            col <= "011";    -- Cinza claro
         else
-            col <= "001";	-- blue
+            col <= "010";    -- Fundo verde (ajustado de 001/azul para não confundir com a raquete)
         end if;
     end process;
-
     
     process(clk_50, reset, first_to_serve,
             ball_xpos_next, ball_ypos_next, ball_x_speed_next, ball_y_speed_next,
